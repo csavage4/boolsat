@@ -16,8 +16,8 @@ def main(argv):
     filename = Path(file_path).name
     
     start = time.time()
-    clauses, vars = parseCNFFile(file_path)
-    sol = dpll(vars, clauses)
+    clauses, vars, ple_vals, tot_nums = parseCNFFile(file_path)
+    sol = dpll(vars, clauses, ple_vals, tot_nums)
     end = time.time()
     
     if sol is False:

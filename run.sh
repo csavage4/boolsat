@@ -13,4 +13,4 @@ fi
 input=$1
 
 # Update this file with instructions on how to run your code given an input
-python src/solver/sat/Main.py $input
+python3 src/solver/sat/Main.py $input
