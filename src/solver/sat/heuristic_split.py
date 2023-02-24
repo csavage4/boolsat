@@ -4,27 +4,18 @@ import random
 from collections import defaultdict
 
 
-def var_split(clauses):
-    J = defaultdict(int)
-    for clause in clauses:
-        clause_len = len(clause)
-        for lit in clause:
-            J[lit] += 2 ** (-clause_len)
+def var_split(J):
+    var_pair = [-1, 0]
+    keys = list(J.keys())
+    for k in keys:
+        tot = J[k] + J[-k]
+        if tot > var_pair[1] and var_pair[0] != -k:
+            var_pair = [k, tot]
 
-    choices = []
-    vals = []
-    for k in J.keys():
-        lit = abs(k)
-        if lit not in choices:
-            choices.append(lit)
-            if -k in J:
-                vals.append(J[k] + J[-k])
-            else:
-                vals.append(J[k])
+    split = abs(var_pair[0])
+    
 
-    split = random.choices(choices, weights=vals, k=1)
-    split = split[0]
-
-    split = random.choices([split, -split], weights=[J[split], J[-split]], k=1)
-    split = split[0]
-    return split
+    if J[split] >= J[-split]:
+        return split
+    else:
+        return -split
